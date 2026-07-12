@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import {usePathname} from "next/navigation";
-import { Show, SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import {cn} from "@/lib/utils";
 
 const navItems = [
@@ -36,13 +36,10 @@ const Navbar = () => {
                     })}
 
                     <div className="flex gap-7.5 items-center">
-                        <Show when="signed-out">
-                            <div className="flex gap-3 items-center">
-                                <SignInButton mode="modal" />
-                                <SignUpButton mode="modal" />
-                            </div>
-                        </Show>
-                        <Show when="signed-in">
+                        <SignedOut>
+                            <SignInButton mode="modal" />
+                        </SignedOut>
+                        <SignedIn>
                             <div className="nav-user-link">
                                 <UserButton />
                                 {user?.firstName && (
@@ -51,7 +48,7 @@ const Navbar = () => {
                                     </Link>
                                 )}
                             </div>
-                        </Show>
+                        </SignedIn>
                     </div>
                 </nav>
             </div>
